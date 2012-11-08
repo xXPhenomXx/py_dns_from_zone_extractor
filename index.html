@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Py dns from zone extractor by xXPhenomXx</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Py dns from zone extractor</h1>
+        <p>Python script to extract DNS entries from zone files</p>
+
+        <p class="view"><a href="https://github.com/xXPhenomXx/py_dns_from_zone_extractor">View the Project on GitHub <small>xXPhenomXx/py_dns_from_zone_extractor</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/xXPhenomXx/py_dns_from_zone_extractor/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/xXPhenomXx/py_dns_from_zone_extractor/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/xXPhenomXx/py_dns_from_zone_extractor">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>py_dns_from_zone_extractor</h2>
+
+<h1></h1>
+
+<p>Python script to extract DNS entries from zone files and write to a CSV</p>
+
+<p><strong>Language:</strong> Python
+<strong>Date Created:</strong> 10-31-12
+<strong>Dependencies:</strong> dnspython &amp; easyzone modules</p>
+
+<p><strong>Description:</strong>
+This script will iterate through a directory full of zone files, extract all of the DNS entries
+and write those DNS records into a CSV file for analysis.</p>
+
+<p><strong>Use Case:</strong>
+We host 6,000 plus sites and store our DNS entries for each site in a database.
+At some point our database became corrupt and we lost some data, the DNS records in the table where no longer reliable. This
+became an issue when we had to move to another Registrar and they requested all of the DNS records in a CSV so they could
+import on their end.</p>
+
+<p>The only reliable source of info was the actual zone files itself. This script will open each zone file and extract the DNS records
+in the zone file and write to the CSV.</p>
+
+<p>This is open-source and free for any use or modification you see fit.</p>
+
+<p>Any questions, comments, or bugs feel free to drop me a line.
+<a href="mailto:jassen.michaels@gmail.com">jassen.michaels@gmail.com</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/xXPhenomXx">xXPhenomXx</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
