@@ -1,17 +1,17 @@
-py_dns_from_zone_extractor
-==========================
+##py_dns_from_zone_extractor
+=========================
 
 Python script to extract DNS entries from zone files
 
-Language: Python
-Date Created: 10-31-12
-Dependencies: dnspython & easyzone
+###Language: Python
+###Date Created: 10-31-12
+###Dependencies: dnspython & easyzone
 
-Description:
+###Description:
 This script will iterate through a directory full of zone files, extract all of the DNS entries
 and write those DNS records into a CSV file for analysis.
 
-Use Case:
+###Use Case:
 We host 6,000 plus sites and store our DNS entries for each site in a database.
 At some point our database became corrupt and we lost some data, the DNS records in the table where no longer reliable. This
 became an issue when we had to move to another Registrar and they requested all of the DNS records in a CSV so they could
