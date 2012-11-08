@@ -1,0 +1,142 @@
+"""
+This script will compile a list of Zone files to parse and extract DNS
+records from. As the DNS entries are parsed from each zone file they
+are inserted into a CSV.
+
+Dependencies:
+    Python
+    dnspython module
+    easyzone module
+
+Author: Jassen Michaels
+Email: jassen.michaels@gmail.com
+Date: 10.31.2012
+"""
+
+import os
+import csv
+import string
+from easyzone import easyzone
+
+class DnsExtractor():
+    """ Extract DNS records from existing Zone files """
+
+
+    def __init__(self):
+
+        # path to zone file directory
+        self.dir_path = '/PATH/TO/ZONE/FILES'
+
+        # path and filename you want to write csv
+        self.csv_path = '/PATH/TO/CSV/FILE.CSV'
+
+
+
+    # Get filename for all Zone files
+    def extract_domains(self):
+        """ Iterate through zone file directory and
+            build list of file names to parse
+
+            Returns:
+                list of zone file names to parse
+        """
+
+        # set counter
+        zone_count = 0
+        file_list = []
+
+        print 'Looking for zone files in ' + str(self.dir_path)
+        for file in os.listdir(self.dir_path):
+            dirfile = os.path.join(self.dir_path, file)
+            if os.path.isfile(dirfile):
+                domain = dirfile.split("zones/")
+                file_list.append(domain[1])
+                zone_count += 1
+        print str(zone_count) + ' zone files found.'
+        return file_list
+
+
+    # Extract DNS entries from Zone file
+    def extract_dns(self, file_list):
+        """ Load zone file
+            Parse all NS, MX, A, TXT, and CNAME records
+            Write data to CSV file
+
+            Args:
+                file_list: list of zone file names to parse
+        """
+
+
+        # Initiate CSV and write header for report
+        csv_write = csv.writer(open(self.csv_path, "wb"))
+        csv_write.writerow(["Zone File", "Record Type", "Domain", "Answer"])
+
+        # Loop through valid Zone files and extract DNS data
+        for domain in file_list:
+
+            # Don't parse backup zone files
+            file_string = string.split(domain, '.')
+            if file_string[-1] != 'backup':
+                dname = domain[:-4]
+
+                # Load up Zone file
+                try:
+                    if easyzone.zone_from_file(dname, self.dir_path+domain):
+                        zone = easyzone.zone_from_file(dname, self.dir_path+domain)
+                except BaseException:
+                    csv_write.writerow(['Unable to connect read zone file', domain])
+
+                # Write all NS records
+                try:
+                    if zone.root.records('NS'):
+                        ns_records = zone.root.records('NS').items
+                        for ns_record in ns_records:
+                            csv_write.writerow([domain, 'NS', dname, ns_record])
+                except BaseException:
+                    pass
+
+
+                # Write all MX records
+                try:
+                    if zone.root.records('MX'):
+                        mx_records = zone.root.records('MX').items
+                        for mx_record in mx_records:
+                            csv_write.writerow([domain, 'MX', dname, mx_record])
+                except BaseException:
+                    pass
+
+                # Write all A records
+                try:
+                    if zone.names:
+                        a_records = zone.names.items()
+                        for a_record in a_records:
+                            if hasattr(a_record[1].records('A'), 'items'):
+                                csv_write.writerow([domain, 'A', a_record[0], a_record[1].records('A').items])
+                except BaseException:
+                    pass
+
+                # Write all CNAME records
+                try:
+                    if zone.root.records('CNAME'):
+                        cname_records = zone.root.records('CNAME')
+                        for cname_record in cname_records:
+                            csv_write.writerow([domain, 'CNAME', dname, cname_record])
+                except BaseException:
+                    pass
+
+                # Write all TXT records
+                try:
+                    if zone.root.records('TXT'):
+                        txt_records = zone.root.records('TXT').items
+                        for txt_record in txt_records:
+                            csv_write.writerow([domain, 'TXT', dname, txt_record])
+                except BaseException:
+                    pass
+
+
+if __name__ == '__main__':
+
+    Dns = DnsExtractor()
+
+    zone_list = Dns.extract_domains()
+    Dns.extract_dns(zone_list)
