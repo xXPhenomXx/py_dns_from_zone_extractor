@@ -12,7 +12,7 @@ This script will iterate through a directory full of zone files, extract all of 
 and write those DNS records into a CSV file for analysis.
 
 Use Case:
-We host 6,000 plus sites and store our DNS entires for each site in a database along with the Zone file that apache uses.
+We host 6,000 plus sites and store our DNS entries for each site in a database.
 At some point our database became corrupt and we lost some data, the DNS records in the table where no longer reliable. This
 became an issue when we had to move to another Registrar and they requested all of the DNS records in a CSV so they could
 import on their end.
